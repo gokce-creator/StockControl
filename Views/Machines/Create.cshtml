@@ -1,0 +1,72 @@
+﻿@model StockControl.Models.Machine
+
+<h1>Yeni Makine Ekle</h1>
+
+<form asp-action="Create" method="post" id="machineForm">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Makine Adı</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-4">Parça Bilgileri</h4>
+    <div id="partsContainer">
+        <div class="part-row">
+            <div class="form-group">
+                <label for="PartName_0" class="control-label">Parça Adı</label>
+                <input name="PartName" class="form-control" data-index="0" />
+            </div>
+            <div class="form-group">
+                <label for="PartStockQuantity_0" class="control-label">Stok Miktarı</label>
+                <input name="PartStockQuantity" type="number" class="form-control" data-index="0" />
+            </div>
+            <button type="button" class="btn btn-danger remove-part" style="margin-top: 30px;">Kaldır</button>
+        </div>
+    </div>
+    <button type="button" id="addPartBtn" class="btn btn-success mt-3">Parça Ekle</button>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Ekle" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let partIndex = 0;
+
+            document.getElementById('addPartBtn').addEventListener('click', function () {
+                partIndex++;
+                const container = document.getElementById('partsContainer');
+                const newRow = document.createElement('div');
+                newRow.className = 'part-row';
+                newRow.innerHTML = `
+                    <div class="form-group">
+                        <label for="PartName_${partIndex}" class="control-label">Parça Adı</label>
+                        <input name="PartName" class="form-control" data-index="${partIndex}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PartStockQuantity_${partIndex}" class="control-label">Stok Miktarı</label>
+                        <input name="PartStockQuantity" type="number" class="form-control" data-index="${partIndex}" />
+                    </div>
+                    <button type="button" class="btn btn-danger remove-part" style="margin-top: 30px;">Kaldır</button>
+                `;
+                container.appendChild(newRow);
+
+                // Kaldır butonuna tıklama olayını ekle
+                newRow.querySelector('.remove-part').addEventListener('click', function () {
+                    container.removeChild(newRow);
+                });
+            });
+
+            // Mevcut kaldırma butonlarına olay ekle
+            document.querySelectorAll('.remove-part').forEach(button => {
+                button.addEventListener('click', function () {
+                    this.parentElement.remove();
+                });
+            });
+        });
+    </script>
+}

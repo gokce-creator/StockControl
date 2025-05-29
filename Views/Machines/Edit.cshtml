@@ -1,0 +1,52 @@
+﻿@model StockControl.Models.Machine
+
+<h1>Makineyi Güncelle</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Makine Adı</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    @if (Model.Parts.Any())
+    {
+        <h4 class="mt-4">Mevcut Parçalar</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Parça Adı</th>
+                    <th>Stok Miktarı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var part in Model.Parts)
+                {
+                    <tr>
+                        <td>@part.Name</td>
+                        <td>@part.StockQuantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="form-group mt-4">
+        <label for="NewPartName" class="control-label">Yeni Parça Adı (Opsiyonel)</label>
+        <input name="NewPartName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="NewPartStockQuantity" class="control-label">Yeni Parça Stok Miktarı (Opsiyonel)</label>
+        <input name="NewPartStockQuantity" type="number" class="form-control" />
+    </div>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Güncelle" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

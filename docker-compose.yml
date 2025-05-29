@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  stockcontrol:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4209:4209"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:4209
+    volumes:
+      - ./stockcontrol.db:/app/stockcontrol.db
+
