@@ -5,10 +5,6 @@ obj/
 Debug/
 Release/
 
-# SQLite geçici dosyaları
-*.db-shm
-*.db-wal
-
 # Diğer gereksiz dosyalar
 *.log
 *.suo
@@ -16,3 +12,4 @@ Release/
 *.cache
 .git
 *.md
+
